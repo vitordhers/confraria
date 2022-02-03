@@ -1,0 +1,21 @@
+.close-button {
+  --border-radius: 50px;
+  height: 20px;
+  width: 20px;
+  margin: 20px;
+}
+
+.cover-img {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}

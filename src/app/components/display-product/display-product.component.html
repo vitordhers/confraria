@@ -1,0 +1,21 @@
+<ion-card class="card" (click)="presentModal()">
+  <ion-card-header>
+    <img
+      class="product-img"
+      src="assets/img/products/{{ product.slug }}.jpg"
+      [alt]="product.name"
+    />
+    <ion-card-title class="product-title">{{ product.name }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item class="button-text item-line" lines="none" [detail]="false">
+      <ion-label class="ion-no-margin">
+        {{ product.description }}
+      </ion-label>
+    </ion-item>
+    <ion-item class="item-line" lines="none" [detail]="false">
+      {{ product.price[0].price | currency: "BRL" }}
+    </ion-item>
+  </ion-card-content>
+</ion-card>

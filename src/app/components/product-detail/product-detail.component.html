@@ -1,0 +1,82 @@
+<ng-container *ngIf="product$ | async as product">
+  <ion-header>
+    <ion-toolbar>
+      <ion-button *ngIf="layoutService.isMobile"
+                  slot="start"
+                  fill="clear"
+                  color="dark"
+                  (click)="close()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-title class="ion-text-center headline">
+        {{ product.name }}
+      </ion-title>
+      <ion-fab-button *ngIf="!layoutService.isMobile"
+                      class="close-button"
+                      slot="end"
+                      (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12"
+                 size-md="6"
+                 class="sticky">
+          <img class="cover-img"
+               src="assets/img/products/{{ product.slug }}_lg.jpg" />
+        </ion-col>
+        <ion-col size="12"
+                 size-md="6">
+          <ion-list *ngIf="unitService.currentUnitId$ | async as currentUnit">
+            <ion-title class="subheadline"> Preço{{product.price.length > 1 ?
+              's' : ''}}
+            </ion-title>
+            <ion-item lines="none"
+                      *ngFor="let price of product.price">
+              <ion-label *ngIf="currentUnit === price.unitId">
+                <b *ngIf="price.size">
+                  {{price.size}} -
+                </b>{{ price.price | currency: "BRL"}}
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none"
+                      *ngIf="product.description">
+              <ion-label class="ion-text-wrap">
+                {{product.description}}
+              </ion-label>
+            </ion-item>
+            <ng-container *ngIf="product.notes?.length">
+              <ion-item lines="none"
+                        *ngFor="let note of product.notes">
+                <ion-label class="ion-text-wrap">{{note}}</ion-label>
+              </ion-item>
+            </ng-container>
+            <ng-container *ngFor="let ingredient of product.ingredients">
+              <ng-container *ngIf="ingredient.display">
+                <ion-title class="subheadline">Opções <span
+                        *ngIf="ingredient.title"> - {{ingredient.title}}</span>
+                </ion-title>
+                <ion-item lines="none"
+                          *ngFor="let option of ingredient.options">
+                  <ion-label>
+                    ⚫ {{option}}
+                  </ion-label>
+                </ion-item>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="product.conditions?.length">
+              <ion-title class="subheadline">Condições</ion-title>
+              <ion-item *ngFor="let condition of product.conditions"
+                        lines="none">
+                <ion-label class="ion-text-wrap">{{condition}}</ion-label>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ng-container>

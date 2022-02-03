@@ -1,0 +1,112 @@
+<ion-app>
+
+  <ng-container *ngIf="(navigationService.currentHeader$ | async) === 'regular'; else adminHeader">
+    <ion-menu id="main-menu"
+              menuId="main-menu"
+              contentId="main-content"
+              type="overlay">
+      <ion-content>
+        <ion-list id="inbox-list">
+          <ion-menu-toggle auto-hide="false"
+                           *ngFor="let p of navigationService.appPages; let i = index">
+            <ion-item routerDirection="root"
+                      [routerLink]="[p.url]"
+                      lines="none"
+                      detail="false"
+                      routerLinkActive="selected">
+              <ion-icon slot="start"
+                        [ios]="p.icon + '-outline'"
+                        [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-toolbar *ngIf="navigationService.headerState$ | async as state"
+                 class="header-toolbar"
+                 mode="md"
+                 [style.--background]="state.color"
+                 [ngClass]="{minimized: state.minimized}">
+      <div slot="start">
+        <ion-img class="logo"
+                 src="assets/img/logo.png"
+                 alt="Logo Confraria do Temaki"
+                 (click)="navigationService.navigate('/home')">
+
+        </ion-img>
+      </div>
+      <ion-buttons class="buttons"
+                   slot="end">
+        <ion-button class="button-text"
+                    fill="clear"
+                    *ngFor="let p of navigationService.appPages"
+                    class="ion-hide-md-down navigation-button button"
+                    [ngClass]="{'selected': p.url === navigationService.currentPage}"
+                    [routerLink]="p.url">{{p.title}}</ion-button>
+        <ion-button class="outline-button button"
+                    fill="outline"
+                    (click)="navigateExternalLink('https://deliverydireto.com.br/confrariadotemaki/confrariadotemaki')">
+          DELIVERY</ion-button>
+        <ion-menu-button menu="main-menu"
+                         class="ion-hide-md-up">
+        </ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  </ng-container>
+
+  <ng-template #adminHeader>
+    <ion-split-pane when="sm"
+                    contentId="admin">
+      <ion-menu menuId="admin-menu" contentId="admin">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+          <ion-list>
+            <ion-list-header>
+              Navigate
+            </ion-list-header>
+            <ion-menu-toggle [autoHide]="false">
+              <ion-item button>
+                <ion-icon slot="start"
+                          name='home'></ion-icon>
+                <ion-label>
+                  Home
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+
+      <div class="ion-page"
+           id="admin">
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-menu-toggle>
+                <ion-button>
+                  <ion-icon slot="icon-only"
+                            name="menu"></ion-icon>
+                </ion-button>
+              </ion-menu-toggle>
+            </ion-buttons>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-router-outlet></ion-router-outlet>
+      </div>
+    </ion-split-pane>
+  </ng-template>
+
+
+
+</ion-app>
