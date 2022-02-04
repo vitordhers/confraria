@@ -8,7 +8,7 @@
 
 src/assets/img
 /server/.env
-/src/environments
+/src/environments/environment.prod.ts
 
 # Node
 /node_modules
