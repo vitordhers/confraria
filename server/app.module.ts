@@ -16,10 +16,10 @@ import { AppController } from './app.controller';
       viewsPath: join(process.cwd(), 'dist/confraria/browser'),
     }),
     ConfigModule.forRoot({ isGlobal: true, envFilePath: 'server/.env' }),
-    AuthModule,
-    UnitsModule,
-    ProductsModule,
-    UsersModule,
+    // AuthModule,
+    // UnitsModule,
+    // ProductsModule,
+    // UsersModule,
   ],
   controllers: [AppController]
 })
